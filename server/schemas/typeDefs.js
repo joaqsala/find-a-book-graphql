@@ -1,23 +1,25 @@
 const { gql } = require('apollo-server-express');
 
 // define the graphql types
+// ask about the password in User not being included in criteria? password: String!
+// ask about _id not being in the Book type? _id: ID!
+// ask about bookData ??
 const typeDefs = gql`
     type User {
         _id: ID!
         username: String!
         email: String!
-        password: String!
+        bookCount: Int
         savedBooks: [Book]
     }
 
     type Book {
-        _id: ID!
+        bookId: String!
         authors: [String]
         description: String!
-        bookId: String!
+        title: String!
         image: String
         link: String
-        title: String!
     }
 
     type Auth {
@@ -26,24 +28,23 @@ const typeDefs = gql`
     }
 
     input NewBook {
-        _id: ID
         authors: [String]
         description: String
+        title: String
         bookId: String
         image: String
         link: String
-        title: String
     }
 
     type Query {
-        user(_id: String): [User]
+        user(_id: String): User
+        me: User
     }
 
     type Mutation {
         login(email: String!, password: String!): Auth
-        createUser(_id: String!, username: String!, email: String!, password: String!): [User]
-        saveBook(bookData: NewBook!): [User]
-        deleteBook(_id: String!, bookId: String!): [User]
+        addUser(username: String!, email: String!, password: String!): Auth
+        saveBook(bookData: NewBook!): User
+        removeBook(_id: String!: User
     }
 `
-//ask about bookData ??
