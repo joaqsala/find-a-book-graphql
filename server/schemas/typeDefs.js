@@ -1,8 +1,6 @@
 const { gql } = require('apollo-server-express');
 
 // define the graphql types
-// ask about the password in User not being included in criteria? password: String!
-// ask about _id not being in the Book type? _id: ID!
 // ask about bookData ??
 const typeDefs = gql`
     type User {
