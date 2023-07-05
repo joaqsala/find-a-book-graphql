@@ -40,13 +40,6 @@ const LoginForm = (props) => {
         throw new Error('something went wrong!');
       }
 
-      // const { token, user } = await response.json();
-      // console.log(user);
-      // Auth.login(token);
-    // } catch (err) {
-    //   console.error(err);
-    //   setShowAlert(true);
-    // }
       } catch (error) {
         console.error(error);
         setShowAlert(true)
