@@ -47,8 +47,9 @@ const LoginForm = (props) => {
     //   console.error(err);
     //   setShowAlert(true);
     // }
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
+        setShowAlert(true)
       }
 
      // clear form values
