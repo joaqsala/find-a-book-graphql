@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Card,
@@ -24,7 +24,9 @@ const SavedBooks = () => {
   const savedBooks = userData?.savedBooks || [];
   console.log(savedBooks)
 
-
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
   // // use this to determine if `useEffect()` hook needs to run again
   // const userDataLength = Object.keys(userData).length;
 
