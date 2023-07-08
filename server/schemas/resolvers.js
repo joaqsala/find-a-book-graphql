@@ -9,7 +9,7 @@ const resolvers = {
     Query: {
         me: async (parent, args, context) => {
             if (context.user) {
-                return User.findOne({_id: context.user._id}).populate('savedBooks');
+                return User.findOne({ _id: context.user._id }).populate('savedBooks');
             }
             throw new AuthenticationError('You need to be logged in!');
         },
@@ -43,8 +43,8 @@ const resolvers = {
             return { token, user };
         },
         saveBook: async (parent, { bookData }, context) => {
-            if (context.user) {
-                return User.findOneAndUpdate(
+            try {
+                const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
                     {
                         $addToSet: {
@@ -55,20 +55,24 @@ const resolvers = {
                         new: true,
                         runValidators: true,
                     }
-                ).populate('savedBooks');
+                );
+
+                return updatedUser;
+            } catch (err) {
+                console.log(err);
+                throw new Error('Failed to save book');
             }
-            throw new AuthenticationError('You need to be logged in!');
         },
         removeBook: async (parent, { bookId }, context) => {
-            if (context.user) {
-                return User.findOneAndUpdate(
-                    { _id: context.user_id },    
-                    { $pull: { savedBooks: bookId } },
-                    { new: true }
-                );
+            const updatedUser = await User.findOneAndUpdate(
+                { _id: context.user_id },
+                { $pull: { savedBooks: bookId } },
+                { new: true }
+            );
+            if (!updatedUser) {
+                throw new AuthenticationError('You need to be logged in!');
             }
-
-            throw new AuthenticationError('You need to be logged in!');
+            return updatedUser
         },
     },
 }
