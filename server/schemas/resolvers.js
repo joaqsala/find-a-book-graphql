@@ -9,7 +9,7 @@ const resolvers = {
     Query: {
         me: async (parent, args, context) => {
             if (context.user) {
-                return User.findOne({ _id: context.user._id }).populate('savedBooks');
+                return User.findOne({ _id: context.user._id });
             }
             throw new AuthenticationError('You need to be logged in!');
         },
@@ -23,13 +23,11 @@ const resolvers = {
             }
 
             const correctPw = await user.isCorrectPassword(password);
-
             if (!correctPw) {
                 throw new AuthenticationError('Incorrect credentials');
             }
 
             const token = signToken(user);
-
             return { token, user };
         },
         addUser: async (parent, { username, email, password }) => {
@@ -56,7 +54,6 @@ const resolvers = {
                         runValidators: true,
                     }
                 );
-
                 return updatedUser;
             } catch (err) {
                 console.log(err);
