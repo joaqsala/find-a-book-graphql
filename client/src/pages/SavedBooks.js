@@ -16,14 +16,15 @@ import { REMOVE_BOOK } from '../utils/mutations';
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(GET_ME);
-  console.log(data);
+  // console.log(data);
 
   const userData = data?.me || {};
-  console.log(userData)
+  // console.log(userData)
 
   const savedBooks = userData?.savedBooks || [];
-  console.log(savedBooks)
+  // console.log(savedBooks)
 
+  // eslint-disable-next-line no-unused-vars
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
 
   if (loading) {
